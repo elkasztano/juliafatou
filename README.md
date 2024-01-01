@@ -137,7 +137,7 @@ target/release/juliafatou -d 800x600 -o example.png -p -0.486,0.587 -g 0.01 -f -
 
 ![example image](example.png)
 
-It really is a lot of try and error. As mentioned above even small changes can have dramatic effects.
+It really is a lot of trial and error. As mentioned above even small changes can have dramatic effects.
 
 ## Notes
 
