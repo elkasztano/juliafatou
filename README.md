@@ -4,6 +4,8 @@
 * two slightly different julia sets are rendered at the same time and combined using a simple algorithm to add more complexity
 * can be used to generate desktop wallpapers
 
+![example image](example0.png)
+
 ## Compiling
 
 Compiling should be pretty straightforward using Cargo:
