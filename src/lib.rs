@@ -66,24 +66,26 @@ fn escape_time(pixel: (usize, usize), scale: (f64, f64), offset: (f64, f64, f64)
 
 // parse two values of a certain type with a specified separator
 
-pub fn parse_pair<T: FromStr>(s: &str, separator: char) -> Option<(T, T)> {
-    match s.find(separator) {
-        None => None,
-        Some(index) => {
-            match (T::from_str(&s[..index]), T::from_str(&s[index + 1..])) {
-                (Ok(l), Ok(r)) => Some((l, r)),
-                _ => None,
-            }
-        }
+pub fn parse_values<T: FromStr>(s: &str, separator: char) -> Result<(T, T), Box<dyn std::error::Error>> where <T as FromStr>::Err: std::error::Error, <T as FromStr>::Err: 'static {
+    let parts: Vec<_> = s.split(separator).collect();
+    if parts.len() != 2 {
+        Err("invalid number of values".into())
+    } else {
+        Ok(
+            (
+                parts.get(0).unwrap().parse()?,
+                parts.get(1).unwrap().parse()?
+            )
+        )
     }
 }
 
 // parse complex number
 
-pub fn parse_complex(s: &str) -> Option<Complex<f64>> {
-    match parse_pair(s, ',') {
-        Some((re, im)) => Some(Complex { re, im }),
-        None => None,
+pub fn parse_complex_number(s: &str) -> Option<Complex<f64>> {
+    match parse_values(s, ',') {
+        Ok((re, im)) => Some(Complex { re, im }),
+        Err(_) => None,
     }
 }
 
