@@ -78,10 +78,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = Arguments::parse();
 
     // parse complex number
-    let complex = parse_complex(&args.complex).expect("error parsing complex number");
+    let complex = parse_complex_number(&args.complex).expect("error parsing complex number");
 
     // parse image dimensions
-    let dimensions: (usize, usize) = parse_pair(&args.dimensions, 'x').expect("error parsing image dimensions");
+    let dimensions: (usize, usize) = parse_values(&args.dimensions, 'x').expect("error parsing image dimensions");
 
     // scalex is used for both x and y axis in order to mitigate image distortion
     let scalex = args.scale / dimensions.1 as f64;
@@ -90,7 +90,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let ratio = dimensions.0 as f64 / dimensions.1 as f64;
     
     // parse offset
-    let parsed_offset: (f64, f64) = parse_pair(&args.off, ':').expect("error parsing offset"); 
+    let parsed_offset: (f64, f64) = parse_values(&args.off, ':').expect("error parsing offset"); 
     
     // calculate actual offset in a way that '0:0' will always result in a centered image
     let off = args.scale / 2.0;
